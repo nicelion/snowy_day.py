@@ -28,7 +28,7 @@ pygame.display.set_caption(TITLE)
 
 # Timer
 clock = pygame.time.Clock()
-refresh_rate = 60
+refresh_rate = 30
 
 
 def draw_cloud(x, y):
@@ -67,10 +67,11 @@ for i in range(25):
     clouds.append([x, y])
 
 snow = []
-for i in range(800):
+for n in range(1000):
     x = random.randrange(0, 1600)
     y = random.randrange(0, 800)
     r = random.randrange(1, 10)
+    speed = random.randrange(1,4)
     snow.append([x, y, r, r])
 
 # Game loop
@@ -104,6 +105,7 @@ def santa():
 
     pygame.draw.line(screen, PYColor.colorWithRGB(109, 51, 0), [552, 99],[665, 73], 5)
 
+lights_on = True
 
 while not done:
     # Event processing
@@ -112,6 +114,9 @@ while not done:
                 done = True
         elif event.type == pygame.MOUSEBUTTONUP:  # or MOUSEBUTTONDOWN depending on what you want.
             print(event.pos)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                lights_on = not lights_on
 
 
 
@@ -125,9 +130,10 @@ while not done:
         c[1] = random.randrange(0, 200)
     for s in snow:
         s[1] += 6
-    if s[1] > 700:
-        s[0] = random.randrange(0, Screen.x)
-        s[1] = random.randrange(0, Screen.x)
+
+        if s[1] > 700:
+            s[0] = random.randrange(0, Screen.x)
+            s[1] = random.randrange(-200, 0)
 
     # Drawing code
 
@@ -188,9 +194,14 @@ while not done:
     pygame.draw.rect(screen, PYColor.darkBownColor(), [165, 370, 90,130])
     pygame.draw.rect(screen, PYColor.blackColor(), [165, 370, 90,130], 3)
 
-    pygame.draw.rect(screen, PYColor.yellowColor(), [260, 360, 90, 110])
-    pygame.draw.rect(screen, PYColor.yellowColor(), [70, 360, 90, 110])
 
+    if lights_on:
+        pygame.draw.rect(screen, PYColor.yellowColor(), [260, 360, 90, 110])
+        pygame.draw.rect(screen, PYColor.yellowColor(), [70, 360, 90, 110])
+    else:
+        pygame.draw.rect(screen, PYColor.blueColor(), [260, 360, 90, 110])
+        pygame.draw.rect(screen, PYColor.blueColor(), [70, 360, 90, 110])
+        
     pygame.draw.polygon(screen, PYColor.greenColor(), [[349, 352+30], [349, 379+30], [334, 379+30]])
     pygame.draw.polygon(screen, PYColor.greenColor(), [[349, 369+30], [349, 399+30], [324, 399+30]])
     pygame.draw.polygon(screen, PYColor.greenColor(), [[349, 429-10], [349, 444], [315, 444]])
@@ -251,11 +262,15 @@ while not done:
     pygame.draw.ellipse(screen, PYColor.blackColor(), [810,350, 7, 7])
     pygame.draw.ellipse(screen, PYColor.blackColor(), [820,352, 7, 7])
 
+    pygame.draw.line(screen, PYColor.darkBownColor(), [795, 400], [750, 330], 10)
+    pygame.draw.line(screen, PYColor.darkBownColor(), [853, 390], [897, 331], 10)
 
     pygame.draw.ellipse(screen, PYColor.whiteColor(), [780, 360, 90, 90])
     pygame.draw.ellipse(screen, PYColor.blackColor(), [780, 360, 90, 90], 1)
     pygame.draw.ellipse(screen, PYColor.whiteColor(), [775, 400, 100, 100])
     pygame.draw.ellipse(screen, PYColor.blackColor(), [775, 400, 100, 100], 1)
+
+    
 
 
 # Update screen

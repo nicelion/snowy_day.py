@@ -27,7 +27,7 @@ def skyBlueColor():
     return (75, 200, 255)
 
 def blueColor():
-    return rgb(31, 121, 239)
+    return rgb(9, 32, 68)
 
 
 def brownColor():
