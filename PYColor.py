@@ -9,8 +9,6 @@ import random
 def rgb(r,g,b):
         return (r,g,b)
 
-
-
 def redColor():
     return (206, 41, 26)
 

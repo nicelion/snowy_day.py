@@ -1,3 +1,4 @@
+
 # Computer Programming 1
 # Unit 11 - Graphics
 #
@@ -6,6 +7,8 @@
 import pygame
 import random
 import PYColor
+import math
+import candy_cane_points
 from pygame.locals import*
 import os
 
@@ -14,6 +17,36 @@ import os
 class Screen:
     x = 1000
     y = 600
+
+class lightColor:
+
+
+    colors = [PYColor.colorWithRGB(34, 204, 0), PYColor.rgb(225, 239, 31), PYColor.redColor()]
+
+
+
+
+
+
+    #
+    # for color in colors:
+    #     if color[0] == color[]
+
+    # list(set(colors))
+    # a = []
+    # for x in colors:
+    #     if x not in a:
+    #         c_1 = colors[0]
+    #         c_2 = colors[1]
+    #         c_3 = colors[2]
+    #         a.append(x)
+    #         print("if not called")
+    #     else:
+    #         colors[0] = PYColor.randomLightColor()
+    #         colors[1] = PYColor.randomLightColor()
+    #         colors[2] = PYColor.randomLightColor()
+    #         print("else called")
+
 
 # Initialize game engine
 pygame.init()
@@ -38,6 +71,14 @@ def draw_cloud(x, y):
     pygame.draw.ellipse(screen, PYColor.cloudColor(), [x + 35, y, 50, 50])
     pygame.draw.rect(screen, PYColor.cloudColor(), [x + 20, y + 20, 60, 40])
 
+def draw_smoke(x, y):
+    pygame.draw.ellipse(screen, PYColor.whiteColor(), [x, y, 40, 60])
+    pygame.draw.ellipse(screen, PYColor.whiteColor(), [x, y, 60, 40])
+    pygame.draw.ellipse(screen, PYColor.whiteColor(), [x, y, 50, 50])
+
+
+
+
 def draw_bush(x, y):
     pygame.draw.ellipse(screen, PYColor.greenColor(), [x, y + 20, 40, 40])
     pygame.draw.ellipse(screen, PYColor.blackColor(), [x, y + 20, 40, 40], 1)
@@ -53,22 +94,27 @@ def draw_bush(x, y):
 
     pygame.draw.rect(screen, PYColor.greenColor(), [x + 20, y + 20, 65, 40])
 
-def draw_light(x,y,r):
+def draw_light(x,y,r, color):
 
-    pygame.draw.ellipse(screen, PYColor.randomLightColor(), [x, y, r, r])
+    pygame.draw.ellipse(screen, color, [x, y, r, r])
 
 
 
 ''' make clouds '''
 clouds = []
 for i in range(25):
-    x = random.randrange(-100, 1600)
+    x = random.randrange(-100, Screen.x)
     y = random.randrange(0,200)
     clouds.append([x, y])
 
+smoke=[]
+for i in range(2):
+    x = random.randrange(0, 600)
+    y = random.randrange(0, 150)
+    smoke.append([x,y])
 snow = []
 for n in range(1000):
-    x = random.randrange(0, 1600)
+    x = random.randrange(0, Screen.x)
     y = random.randrange(0, 800)
     r = random.randrange(1, 10)
     speed = random.randrange(1,4)
@@ -105,6 +151,10 @@ def santa():
 
     pygame.draw.line(screen, PYColor.colorWithRGB(109, 51, 0), [552, 99],[665, 73], 5)
 
+def test(x):
+
+    pygame.draw.ellipse(screen, PYColor.orangeColor(), [x + 526, 176, 100, 100])
+
 lights_on = True
 
 while not done:
@@ -129,7 +179,7 @@ while not done:
         c[0] = random.randrange(800, 1600)
         c[1] = random.randrange(0, 200)
     for s in snow:
-        s[1] += 6
+        s[1] += 2
 
         if s[1] > 700:
             s[0] = random.randrange(0, Screen.x)
@@ -190,9 +240,11 @@ while not done:
 
     pygame.draw.rect(screen, PYColor.houseColor(), [60, 250, 300, 250])
     pygame.draw.rect(screen, PYColor.blackColor(), [60, 250, 300, 250], 3)
+
     '''Door'''
     pygame.draw.rect(screen, PYColor.darkBownColor(), [165, 370, 90,130])
     pygame.draw.rect(screen, PYColor.blackColor(), [165, 370, 90,130], 3)
+
 
 
     if lights_on:
@@ -207,14 +259,14 @@ while not done:
     pygame.draw.polygon(screen, PYColor.greenColor(), [[349, 429-10], [349, 444], [315, 444]])
     pygame.draw.polygon(screen, PYColor.greenColor(), [[349, 429-5], [349, 444+25], [310, 444+25]])
 
-    draw_light(343,397, 5)
-    draw_light(331, 424, 5)
-    draw_light(341, 421, 5)
-    draw_light(341,431, 5)
-    draw_light(326,441, 5)
-    draw_light(344,449, 5)
-    draw_light(334, 446, 5)
-    draw_light(339, 407, 5)
+    draw_light(343,397, 5, lightColor.colors[0])
+    draw_light(331, 424, 5, lightColor.colors[1])
+    draw_light(341, 421, 5, lightColor.colors[2])
+    draw_light(341,431, 5, lightColor.colors[0])
+    draw_light(326,441, 5, lightColor.colors[1])
+    draw_light(344,449, 5, lightColor.colors[2])
+    draw_light(334, 446, 5, lightColor.colors[0])
+    draw_light(339, 407, 5, lightColor.colors[1])
 
 
 
@@ -228,18 +280,18 @@ while not done:
 
     draw_bush(60, 450)
     draw_bush(280, 450)
-    draw_light(89,475,10)
-    draw_light(113,466,10)
-    draw_light(137,482,10)
-    draw_light(74,493,10)
-    draw_light(110,496,10)
-    draw_light(308,473,10)
-    draw_light(296,489,10)
-    draw_light(322,496,10)
-    draw_light(360,494,10)
-    draw_light(341,458,10)
-    draw_light(319, 460,10)
-    draw_light(341, 479,10)
+    draw_light(89, 475, 10, lightColor.colors[0])
+    draw_light(113, 466, 10, lightColor.colors[1])
+    draw_light(137, 482, 10, lightColor.colors[2])
+    draw_light(74, 493, 10, lightColor.colors[0])
+    draw_light(110, 496, 10, lightColor.colors[1])
+    draw_light(308, 473, 10, lightColor.colors[2])
+    draw_light(296, 489, 10, lightColor.colors[0])
+    draw_light(322, 496, 10, lightColor.colors[1])
+    draw_light(360, 494, 10, lightColor.colors[2])
+    draw_light(341, 458, 10, lightColor.colors[0])
+    draw_light(319, 460, 10, lightColor.colors[1])
+    draw_light(341, 479, 10, lightColor.colors[2])
 
 
 
@@ -270,7 +322,6 @@ while not done:
     pygame.draw.ellipse(screen, PYColor.whiteColor(), [775, 400, 100, 100])
     pygame.draw.ellipse(screen, PYColor.blackColor(), [775, 400, 100, 100], 1)
 
-    
 
 
 # Update screen
